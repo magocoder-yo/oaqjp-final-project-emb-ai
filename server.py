@@ -11,7 +11,13 @@ def root_endpoint():
 def emotion_detector_endpoint():
     text_to_analyze = request.args.get('textToAnalyze')
 
+    if text_to_analyze == "":
+        return "Invalid text! Please try again!"
+
     result = emotion_detector(text_to_analyze)
+
+    if result['dominant_emotion'] == None:
+        return "Invalid text! Please try again!"
 
     return_string = f"For the given statement, the system response is "
     return_string += f"'anger': {result['anger']}, "
